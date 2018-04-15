@@ -1,0 +1,42 @@
+[global_config]
+  title_font = arial 16
+  window_state = fullscreen
+[keybindings]
+  close_term = <Ctrl><Shift>Q
+  close_window = <Ctrl><Shift>escape
+  full_screen = <Ctrl><Alt>F
+  go_down = <Ctrl><Shift>J
+  go_left = <Ctrl><Shift>H
+  go_right = <Ctrl><Shift>L
+  go_up = <Ctrl><Shift>K
+  split_horiz = <Ctrl><Shift>B
+  split_vert = <Ctrl><Shift>V
+  zoom_in = <Ctrl>plus
+  zoom_out = <Ctrl>minus
+[layouts]
+  [[default]]
+    [[[child1]]]
+      command = ""
+      directory = ""
+      parent = window0
+      type = Terminal
+    [[[child2]]]
+      command = vim -S $PROJECT_DIR/Session.vim
+      directory = $PROJECT_DIR
+      parent = child1
+      profile = default
+      type = Terminal
+    #custom_command = "vim -s $PROJECT_CONFIG/Session.vim"
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    cursor_color = "#FFFFFF"
+    custom_command = bash
+    font = Tlwg Typewriter Medium 14
+    foreground_color = "#ffffff"
+    login_shell = True
+    palette = "#000000:#cd0000:#00cd00:#cdcd00:#0000cd:#cd00cd:#00cdcd:#faebd7:#404040:#ff0000:#00ff00:#ffff00:#0000ff:#00ff28:#00ffff:#ffffff"
+    use_system_font = False
