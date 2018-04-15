@@ -9,8 +9,12 @@
 #This script is to be used at work to setup my login scripts and application config files
 
 VIMRC='./.vimrc'
-TERMINATOR_CONFIG='./.config'
+TERMINATOR_CONFIG='./config'
 BASHRC='./.bashrc'
+
+RESET_VIM=0
+RESET_TERM=0
+RESET_BASH=0
 
 #PROCESS .VIMRC
 if [ -e "${HOME}/.vimrc" ]; then
@@ -61,10 +65,15 @@ if [ -e "${HOME}/.config/terminator/config" ]; then
 	echo "Found configuration for terminator"
 	if [ "$RESET_TERM" = 0 ]; then
 		echo "Resetting your terminator configuration"
+		mkdir -p ${HOME}/.config/terminator
 		cp $TERMINATOR_CONFIG ${HOME}/.config/terminator/config
 	fi
 else
 	echo "Found no configuration for terminator"
 	echo "Creating configuration for terminator"
-	cp $TERMINATOR_CONFIG ${HOME}/.config/terminator/config
+	mkdir -p ${HOME}/.config/terminator
+	cp $TERMINATOR_CONFIG "${HOME}/.config/terminator/config"
 fi
+
+echo "-------------------------------------------"
+echo "ALL DONE! Enjoy your super cool machine! :D"
