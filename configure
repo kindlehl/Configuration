@@ -56,7 +56,7 @@ if [ -e "${HOME}/.bashrc" ]; then
 
 	if [ "$RESET_BASH" = 0 ]; then
 		echo "Replacing your .bashrc"
-		cp -f $VIMRC ${HOME}/.bashrc
+		cp -f $BASHRC ${HOME}/.bashrc
 	else
 		echo "Doing nothing to your .bashrc"
 	fi
@@ -64,7 +64,7 @@ if [ -e "${HOME}/.bashrc" ]; then
 else
 	echo "Could not locate ${HOME}/.bashrc"	
 	echo "Creating your .bashrc!"
-	cp $VIMRC ${HOME}/.bashrc
+	cp $BASHRC ${HOME}/.bashrc
 fi
 
 #COPY TERMINATOR CONFIG
