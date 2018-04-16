@@ -1,20 +1,26 @@
 #!/bin/bash
 
+#This script is to be used to copy my personal configuration into the machine that it is ran from. 
+#It changes the default functionality of the following programs:
+#	-Vim
+#	-Terminator
+#	-Bash Shell
+#It also creates a personal bin folder and installs some custom software (i.e. Scheduler, a task-listing program that tells me what I need to focus on based on the "time it takes to do"/"time left to do" ratio)
+
 #TWEAKABILITY VARIABLES:
 #RESET_VIM: 0(TRUE) or 1(FALSE). Will delete your .vimrc and replace it with the one in this repo 
 #RESET_TERM: 0(TRUE) or 1(FALSE). Will delete your .config/terminator/config and replace it with the one in this repo 
 #RESET_BASH: 0(TRUE) or 1(FALSE). Will delete your .bash_rc and replace it with the one in this repo 
 
+RESET_VIM=0
+RESET_TERM=0
+RESET_BASH=0
 
-#This script is to be used at work to setup my login scripts and application config files
-
+#relative path vars
 VIMRC='./.vimrc'
 TERMINATOR_CONFIG='./config'
 BASHRC='./.bashrc'
 
-RESET_VIM=0
-RESET_TERM=0
-RESET_BASH=0
 
 #PROCESS .VIMRC
 if [ -e "${HOME}/.vimrc" ]; then
@@ -75,15 +81,23 @@ else
 	cp $TERMINATOR_CONFIG "${HOME}/.config/terminator/config"
 fi
 
+#install Custom Software
 mkdir -p ${HOME}/bin
 echo "Installing Scheduler"
 mkdir -p ${HOME}/temp 
-
-git clone https://github.com/Scheduler.git temp/Scheduler
-cd ${HOME}/temp/Scheduler
-make && cp ./Scheduler ${HOME}/bin
+cd ${HOME}/temp
+#Scheduler
+git clone https://github.com/kindlehl/Scheduler.git Scheduler
+cd Scheduler
+make && mv ./Scheduler ${HOME}/bin
 cd 
 rm -rf temp
 
+#self-destruct
+SCRIPT_DIR=$PWD
+cd ..
+rm -rf SCRIPT_DIR
+
+echo
 echo "-------------------------------------------"
 echo "ALL DONE! Enjoy your super cool machine! :D"
