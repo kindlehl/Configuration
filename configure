@@ -22,6 +22,7 @@ TERMINATOR_CONFIG='./config'
 BASHRC='./.bashrc'
 
 
+
 #PROCESS .VIMRC
 if [ -e "${HOME}/.vimrc" ]; then
 	echo "Found a vimrc."
@@ -93,10 +94,7 @@ make && mv ./Scheduler ${HOME}/bin
 cd 
 rm -rf temp
 
-#self-destruct
-SCRIPT_DIR=$PWD
-cd ..
-rm -rf SCRIPT_DIR
+
 
 echo
 echo "-------------------------------------------"
