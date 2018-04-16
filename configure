@@ -75,5 +75,15 @@ else
 	cp $TERMINATOR_CONFIG "${HOME}/.config/terminator/config"
 fi
 
+mkdir -p ${HOME}/bin
+echo "Installing Scheduler"
+mkdir -p ${HOME}/temp 
+
+git clone https://github.com/Scheduler.git temp/Scheduler
+cd ${HOME}/temp/Scheduler
+make && cp ./Scheduler ${HOME}/bin
+cd 
+rm -rf temp
+
 echo "-------------------------------------------"
 echo "ALL DONE! Enjoy your super cool machine! :D"
