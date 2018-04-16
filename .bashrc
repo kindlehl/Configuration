@@ -16,7 +16,7 @@ HISTCONTROL=ignoreboth
 #Environment Variable definitions
 	export EDITOR='vim'
 	export VISUAL='vim'
-	export PATH=/usr/local/lib:/usr/lib:$PATH
+	export PATH=/usr/local/lib:/usr/lib:${HOME}/bin:$PATH
 	#Environment Variable that sets my current project. When terminator opens a second window, it will open the Session.vim file in this path
 	export PROJECT_DIR='/home/hunter/Projects/Scheduler'
 	export GREP_COLORS='ms=01;10:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
