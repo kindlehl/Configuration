@@ -9,8 +9,8 @@
   go_left = <Ctrl><Shift>H
   go_right = <Ctrl><Shift>L
   go_up = <Ctrl><Shift>K
-  split_horiz = <Ctrl><Shift>B
-  split_vert = <Ctrl><Shift>V
+  split_horiz = <Ctrl><Shift>space
+  split_vert = <Ctrl><Shift>u
   zoom_in = <Ctrl>plus
   zoom_out = <Ctrl>minus
 [layouts]
