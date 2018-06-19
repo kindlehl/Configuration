@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd ~/Configuration
+git checkout master
+git add ~/.vimrc
+git commit -m "Changes made on `date`
+
+$1  "
+git push origin master -f
+

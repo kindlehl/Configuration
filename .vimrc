@@ -7,10 +7,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'auto-pairs'
 Plugin 'tomtom/tcomment_vim', {'rtp': '~/.vim/bundle/tcomment_vim/plugin'}
-Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -57,5 +56,15 @@ set cmdheight=2
 set notimeout ttimeout ttimeoutlen=200
 set pastetoggle=<F11>
 map Y y$
-set mouse=""
+set mouse=""f
+
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
+let mapleader = ","
+
+nnoremap <leader>ev :edit ~/.vimrc<Enter>
+nnoremap <leader>sv :source ~/.vimrc<Enter>
+nnoremap <leader><leader>h <C-w>h
+nnoremap <leader><leader>j <C-w>J
+nnoremap <leader><leader>k <C-w>k
+nnoremap <leader><leader>l <C-w>l
