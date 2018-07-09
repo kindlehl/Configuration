@@ -1,4 +1,4 @@
-"VUNDLE SHIT"
+"VUNDLE SETUP"
 
 set nocompatible
 filetype off
