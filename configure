@@ -90,8 +90,8 @@ cd ${HOME}/temp
 #Scheduler
 git clone https://github.com/kindlehl/Scheduler.git Scheduler
 cd Scheduler
-make && mv ./Scheduler ${HOME}/bin
-cd 
+make && mv ./scheduler ${HOME}/bin
+cd
 rm -rf temp
 
 
