@@ -1,7 +1,6 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
+#~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -12,22 +11,18 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-
-#Environment Variable definitions
-	export EDITOR='vim'
-	export VISUAL='vim'
-	export PATH=/usr/local/lib:/usr/lib:${HOME}/bin:$PATH
-	#Environment Variable that sets my current project. When terminator opens a second window, it will open the Session.vim file in this path
+#Environment Variable definitions export EDITOR='/usr/bin/vim' export VISUAL='/usr/bin/vim'
 	export PROJECT_DIR='/home/hunter/Projects/Scheduler'
-	export GREP_COLORS='ms=01;10:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
-	
+  source ~/.work_secretsrc
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+# HISTSIZE=1000
+# HISTFILESIZE=2000
+HISTSIZE=50
+HISTFILESIZE=400
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -53,7 +48,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -86,6 +81,7 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
+    alias ldapvi="ldapvi -D uid=$USER,ou=People,dc=osuosl,dc=org -h ldaps://ldap1.osuosl.org"
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -107,14 +103,25 @@ alias project='vim -S $PROJECT_DIR/Session.vim'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias c="clear"
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+alias gl='git log --decorate --color --graph'
+alias gp='git push origin HEAD'
+alias gcm='git checkout master && git pull'
+alias grm='git rebase master'
+alias grc='git rebase --continue'
+alias gs='git status'
+alias gcf='git checkout --'
+alias sshstart='eval $(ssh-agent)'
+alias eb="$EDITOR ~/.bashrc"
+alias rs='. ~/.bashrc'
+alias resume='vim -S Session.vim'
+alias kc='kitchen converge'
+alias kl='kitchen login'
+alias kt='kitchen test'
+alias kd='kitchen destroy'
+alias kv='kitchen verify'
+alias nb='git checkout master && git pull origin master && git checkout -b'
+if [ -f ~/.work_specific ]; then
+    . ~/.work_specific
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -128,3 +135,73 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# This PATH definition must be at the end of this file. Chef does some modification of the PATH through some of the stuff that the OSL had you put in here. This version must be here so that /opt/kitchen/bin is at the beginning, thus overriding the dafault path to kitchen.
+export PATH="${HOME}/bin:~/osuosl/zonefiles/scripts/:/opt/kitchen/bin:/usr/local/lib:/usr/lib:$PATH"
+
+HOSTNAME=$(hostname)
+
+cat ~/.msg
+
+export ALREADY_SOURCED="randomstringthatdoesnotmatterintheslightest"
+
+
+waitfor() {
+    shopt -s expand_aliases
+    while true; do
+        echo "Thank you for being lazy"
+        echo "COMMAND: $2"
+        echo "WATCHED FILES: $(echo $1)"
+# The use of echo here forces the shell to perform globbing and expansions 
+        inotifywait -e modify $(echo $1)
+        echo "EXECUTING COMMAND"    
+        $2  
+        sleep 5
+        clear
+    done
+}
+# function that takes a list of usernames, and resets their passwords with randomly generated passwords, and puts the password in their homedir
+# must be run as root
+generate_pw_for (){
+  for username in "$@"; do
+    pw=$(pwgen 15 1)
+    passwd $username <<EOF
+$pw
+$pw
+EOF
+    echo "This is a randomly generated password courtesy of OSUOSL. Please delete this after you change your password
+    " > /home/${username}/password.deleteme
+    echo "$pw" >> /home/${username}/password.deleteme
+  done
+}
+
+rmtw() {
+  sed 's/\s*$//' "$1" > ${1}.bak
+  mv ${1}.bak "$1"
+}
+
+digs() {
+  dig "$1" | grep -A 2 ANSWER
+}
+
+digx() {
+  dig -x "$1" | grep -A 2 ANSWER
+}
+
+shady () {
+  ssh-add ~/.ssh/id_rsa_$1
+}
+
+d() {
+  cd $@ && ls
+}
+
+e(){
+  $@ 2>&1 >/dev/null & disown
+}
+
+mistake() {
+  git commit -a --amend <<EOF
+:wq
+EOF
+  git push origin -f HEAD
+}
